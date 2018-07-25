@@ -15,7 +15,7 @@ public class deckapi {
         get(newshuffledeck, (req, res) -> {
           String countstring = req.queryParams("deck_count")==null?"1":req.queryParams("deck_count");
           int count=Integer.parseInt(countstring);
-
+           count=count<1?1:count;
 
           String shuf=req.params("shuffle"),response;
           Boolean shuffled=shuf.compareTo("shuffle")==0;
@@ -42,7 +42,9 @@ public class deckapi {
             String countstring = req.queryParams("deck_count")==null?"1":req.queryParams("deck_count");
             System.out.println(countstring);
             String deck_id;
-            int count=Integer.parseInt(countstring),remaining=count*52;
+            int count=Integer.parseInt(countstring);
+            count=count<1?1:count;
+            int remaining=count*52;
 
             apidecks.refresholddeck();
 
@@ -56,6 +58,7 @@ public class deckapi {
             String deck_id = req.params(":deck_id");
             String countstring= req.queryParams("count")==null?"1":req.queryParams("count");
             int count=Integer.parseInt(countstring);
+            count=count<1?1:count;
             String response=apidecks.draw(count,deck_id);
 
             return response;
